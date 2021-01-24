@@ -1,0 +1,64 @@
+Encea Ioana-Catalina 324CA
+
+Repo github: https://github.com/Catalina07/OOP_project2
+
+Am decis sa fac majoritatea implementarii in pachetul fileio. In acesta se regasesc
+mai multe fisiere. Consumer, Distributor(in acest fisier este implementat Comparable
+<Distributor> pentru a compara distibutorii dupa contract si un Map pentru a retine
+contractele consumatorilor la un anumit distributor), InitialData, respectiv 
+Input sunt create in special pentru a citi datele de intrare, completand ulterior 
+cu campuri necesare in implementare.
+
+Consumator si Distributor implementeaza ambele Interfata EntityInput(utilizat 
+ulterior pentru factory).
+
+Asemanator, ConsumerOutput si DistributorsOutput implementeaza interfata 
+EntityOutput. De precizat faptul ca aceste 2 clase sunt pentru datele de iesire.
+In pachetul factory, este o singura clasa ce represinta un factory(Singleton) ce 
+creeaza 3 tipuri de obiecte: consumator,  distributor, respectiv Producer. Acest
+factory va fifolosit in main dupa ce termin de trecut prin numarul de luni, listele 
+de consumers si distributers sunt trecute in liste de ConsumersOutput, 
+DistributersOutput si ProducersOutput.
+
+In pachetul Pay este o singura clasa ce calculeaza bugetul pentru consumer, 
+pentru distributor, si o metoda ReceivePay. Daca consumatorul are debt de luna
+trecuta  si contractul are mai mult de o luna si poate sa plateasca,inclusiv cu
+penalizare, acesta plateste fara probleme. Daca nu poate plati, intra in faliment si 
+iese din joc. Daca are datorii la un disttributor vechi, si isi
+permite sa plateasca si debtul de luna trecuta, poate plati normal. Altfel, iese din
+joc de la ambii distributori. Mai sunt de analizat pentru acest joc inca
+2 cazuri: daca isi permite sa plateasca direct, respectiv daca in contract mai are 
+doar o singura luna(si nu poate plati. Aici se reduce la un caz precedent). Aici ma 
+folosesc de un switch pentru a retine starea consumatorului
+(daca are datorie sau nu).
+
+In pachetul stategies sunt implementate cele 3 tipuri de strategii necesare, GREEN, 
+QUANTITY si PRICE strategy. Ma folosesc de o lista de producatori, respectiv
+distributori pentru a sorta lista de producatori asignati la un distributor,
+Folosind Streams. Tot aici tratez cazul cand un distributor isi alege mai multi
+producatori pentru a avea energie suficienta. De asemenea, in aceasta metoda(
+chooseDistributors), este apelata metoda addObserver pentru a adauga in lista de 
+observeri un anumit distributor.
+Asemanator acestui procedeu se implementeaza si celelalte 2 strategii.
+
+De asemenea, am implmenentat si Design Patternul Observer, ce are ca Observer 
+Distribuitorii, iar clasa Observable este extinsa de clasa Producer. In clasa 
+ulterioara creez o noua metoda, setChanges, necesara design patternului.
+
+Mai exista o clasa, Resolve, unde sunt implementate metodele: 
+calculateConsumersAtEndOfRound() ce reprezinta numarul de active Consumers pentru
+fiecare distributor. FirstMonth(), prima luna cand toti consumatorii se duc la 
+cel mai ieftin contract oferit de distributori si se apeleaza si se decide ce tip de
+stategie se va folosi. Dupa sunt metode care presupun CostChanges si newConsumers.
+De asemenea, la etapa 2 am creat o metoda separata in clasa Resove care aplica
+schimbarile aduse lunar si sortez lista de distribuitori in functie de ordinea 
+crescatoare a id.urilor.
+
+In main, la fel ca la etapa 1, pentru fiecare luna, adaptand astfel incat 
+sa tin cont de existenta producatorilor si creand o strategie, simulez jocul.
+Este de precizat faptul ca tin cont atunci cand intr-o luna
+exista schimbari, golesc lisa de producatori care se afla la un
+distributor, si creez un nou tip de strategy.
+Dupa terminarea lunilor creez cu Factory listele de consumersOutput,
+DistributorsOutput, ProducersOutput ce formeaza un Output output.
+
